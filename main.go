@@ -37,7 +37,6 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(s *ebiten.Image) {
 	screen := textures.NewTexture("./art/empty.png", Test_Shader)
-
 	s.Fill(color.White)
 
 	sanke.Draw(screen.GetTexture())
