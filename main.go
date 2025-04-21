@@ -36,22 +36,11 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(s *ebiten.Image) {
-	screen := textures.NewTexture("", Test_Shader)
-
-	screen.SetUniforms(map[string]any{
-		"Time": time,
-	})
+	screen := textures.NewTexture("./art/empty.png", Test_Shader)
 
 	s.Fill(color.White)
 
 	sanke.Draw(screen.GetTexture())
-
-	chicken_op := ebiten.DrawImageOptions{}
-	chicken_op.GeoM.Translate(-32, 16)
-	chicken_op.GeoM.Rotate(time)
-	chicken_op.GeoM.Scale(2, 2)
-	chicken_op.GeoM.Translate(steve_pos.x, steve_pos.y)
-	chicken_tex.Draw(screen.GetTexture(), &chicken_op)
 
 	op := ebiten.DrawImageOptions{}
 	screen.Draw(s, &op)

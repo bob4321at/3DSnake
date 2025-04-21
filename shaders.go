@@ -3,8 +3,6 @@ package main
 var Test_Shader = `//kage:unit pixels
 	package main
 
-	var Time float
-
 	func Fragment(targetCoords vec4, srcPos vec2, _ vec4) vec4 {
 		col := imageSrc0At(srcPos.xy)
 		below := imageSrc0At(vec2(srcPos.x+(targetCoords.x/64)-(8), srcPos.y+(targetCoords.y/64)-(6)))
