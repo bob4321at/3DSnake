@@ -1,48 +1,23 @@
 package main
 
 import (
-	"image/color"
-	"math"
-
 	"github.com/hajimehoshi/ebiten/v2"
 
-	"main/textures"
+	"main/scenes"
+	"main/utils"
 )
 
 type Game struct{}
 
-type Vec2 struct {
-	x, y float64
-}
-
-var snake_tex *textures.Texture
-var sanke = NewSnake(100, 100, 100, "./art/snake_head.png")
-
-var chicken_tex *textures.Texture
-
-var steve_pos = Vec2{100, 100}
-var time = float64(0)
-
 func (g *Game) Update() error {
-	sanke.Upate()
-	time += 0.01
-	mx, my := ebiten.CursorPosition()
-	MousePos.x = float64(mx)
-	MousePos.y = float64(my)
-
-	steve_pos.x += math.Cos(time)
+	scenes.List_Of_Scenes[scenes.Current_Scene].Update()
+	utils.GameTime++
 
 	return nil
 }
 
 func (g *Game) Draw(s *ebiten.Image) {
-	screen := textures.NewTexture("./art/empty.png", Test_Shader)
-	s.Fill(color.White)
-
-	sanke.Draw(screen.GetTexture())
-
-	op := ebiten.DrawImageOptions{}
-	screen.Draw(s, &op)
+	scenes.List_Of_Scenes[scenes.Current_Scene].Draw(s, s)
 }
 
 func (g *Game) Layout(ow, oh int) (sw, sh int) {
@@ -52,9 +27,7 @@ func (g *Game) Layout(ow, oh int) (sw, sh int) {
 func main() {
 	ebiten.SetWindowSize(1280, 720)
 
-	snake_tex = textures.NewTexture("./art/snake_head.png", "")
-	chicken_tex = textures.NewTexture("./art/lava_chicken.png", "")
-	snake_tex.SetUniforms(map[string]any{})
+	scenes.List_Of_Scenes[0].Setup()
 
 	if err := ebiten.RunGame(&Game{}); err != nil {
 		panic(err)
